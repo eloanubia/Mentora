@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentora</title>
+<link rel="icon" type="image/png" href="Imagens/capelo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="menu"></div>
+<div class="container estreito centro" style="margin-top:80px">
+  <span class="avatar grande" id="inicial" style="background:var(--laranja);color:#fff;border-radius:50%"></span>
+  <h1 id="ola"></h1>
+  <p><small>Como você deseja usar a Mentora hoje?</small></p>
+  <div class="grade">
+    <a href="buscar.html" class="card" style="background:var(--laranja);color:#fff"><h3>Quero aprender</h3><small style="color:#fff">Busque professores e agende aulas</small></a>
+    <a href="professor-cadastro.html" class="card"><h3>Quero dar aulas</h3><small>Cadastre seu perfil e comece a ensinar</small></a>
+  </div>
+  <p><small>Você pode alternar entre aluno e professor no seu perfil a qualquer momento.</small></p>
+</div>
+<script src="api.js"></script>
+<script src="script.js"></script>
+<script>
+  if (exigirLogin()) {
+    montarMenu();
+    const primeiro = usuario().nome.split(" ")[0] || "";
+    document.getElementById("inicial").textContent = primeiro[0] || "?";
+    document.getElementById("ola").textContent = "Olá" + (primeiro ? ", " + primeiro : "") + "! 👋";
+  }
+</script>
+</body></html>

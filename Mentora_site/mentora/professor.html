@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentora</title>
+<link rel="icon" type="image/png" href="Imagens/capelo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="menu"></div>
+<div class="cabecalho"><div class="container" style="margin:0 auto;padding:20px">
+  <div class="linha">
+    <span class="avatar grande p-inicial"></span>
+    <div class="cresce"><b class="p-nome"></b><br><small class="laranja p-materia"></small></div>
+    <a href="#" class="tag" onclick="trocarAba('pedidos'); return false;"><b class="contador"></b> Solicitações pendentes →</a>
+  </div>
+  <div class="abas">
+    <button data-aba="inicio" class="ativo" onclick="trocarAba('inicio')">Início</button>
+    <button data-aba="pedidos" onclick="trocarAba('pedidos')">Pedidos (<span class="contador"></span>)</button>
+    <button data-aba="agenda" onclick="trocarAba('agenda')">Agenda</button>
+    <button data-aba="perfil" onclick="trocarAba('perfil')">Perfil</button>
+  </div>
+</div></div>
+
+<div class="container">
+  <div id="aviso-status"></div>
+  <div class="aba ativa" id="aba-inicio">
+    <div class="grade">
+      <div class="card"><small>Aulas (Set)</small><h2 id="c-aulas">—</h2></div>
+      <div class="card"><small>Ganhos (Set)</small><h2 id="c-ganhos">—</h2></div>
+      <div class="card"><small>Avaliação</small><h2 id="c-nota">—</h2></div>
+      <div class="card"><small>Alunos ativos</small><h2 id="c-alunos">—</h2></div>
+    </div>
+    <div class="grade" style="margin-top:20px">
+      <div><h2>Próximas aulas</h2><div id="proximas"></div></div>
+      <div><h2>Status dos pagamentos</h2><div id="pagamentos"></div>
+        <small>Para confirmar uma aula, clique em “PIN →” na aula e passe o número ao aluno.</small></div>
+    </div>
+  </div>
+
+  <div class="aba" id="aba-pedidos"><h2>Solicitações de aulas</h2><div id="pedidos"></div></div>
+  <div class="aba" id="aba-agenda"><h2>Minha agenda</h2><div id="agenda"></div></div>
+
+  <div class="aba" id="aba-perfil">
+    <h2>Meu perfil</h2>
+    <div class="card linha"><span class="avatar grande p-inicial"></span><div><b class="p-nome"></b><br><small class="laranja p-materia"></small></div></div>
+    <a href="#" class="menu-item" onclick="trocarAba('perfil-editar'); return false;">✏️ Editar perfil</a>
+    <a href="#" class="menu-item" onclick="trocarAba('perfil-disciplinas'); return false;">📚 Minhas disciplinas</a>
+    <a href="#" class="menu-item" onclick="trocarAba('perfil-notificacoes'); return false;">🔔 Notificações<span id="qtdNotif"></span></a>
+    <a href="buscar.html" class="menu-item">🎓 Trocar para aluno</a>
+    <a href="#" class="menu-item" onclick="sair(); return false;">🚪 Sair</a>
+  </div>
+
+  <div class="aba" id="aba-perfil-editar">
+    <a href="#" onclick="trocarAba('perfil'); return false;">← Voltar</a>
+    <h2>Editar perfil</h2>
+    <form class="card" onsubmit="salvarPerfilProfessor(event)">
+      <label>Nome completo</label><input type="text" id="pe-nome" required>
+      <label>Formação acadêmica</label><input type="text" id="pe-formacao" required>
+      <label>Apresentação</label><textarea rows="3" id="pe-bio" placeholder="Fale sobre sua experiência e metodologia..."></textarea>
+      <button class="btn btn-largo" style="width:100%">Salvar alterações</button>
+    </form>
+  </div>
+
+  <div class="aba" id="aba-perfil-disciplinas">
+    <a href="#" onclick="trocarAba('perfil'); return false;">← Voltar</a>
+    <h2>Minhas disciplinas</h2>
+    <div class="card">
+      <small>Clique para marcar ou desmarcar as matérias que você ensina.</small>
+      <div id="disciplinas" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <div class="aba" id="aba-perfil-notificacoes">
+    <a href="#" onclick="trocarAba('perfil'); return false;">← Voltar</a>
+    <h2>Notificações</h2>
+    <div id="notificacoes"></div>
+  </div>
+</div>
+<script src="api.js"></script>
+<script src="script.js"></script>
+<script>
+  montarMenu();
+  mostrarPainel(); // busca tudo na API (perfil, pedidos, agenda, pagamentos...)
+</script>
+</body></html>

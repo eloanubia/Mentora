@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentora</title>
+<link rel="icon" type="image/png" href="Imagens/capelo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="menu"></div>
+<div class="container estreito">
+  <div class="linha"><a href="#" class="cresce" onclick="voltar(); return false;">← Voltar</a><small id="passo"></small></div>
+  <div class="barra"><span></span><span></span><span></span></div>
+
+  <div class="card">
+    <div class="etapa">
+      <h1>Quem é você?</h1><small>Complete seu perfil de professor</small>
+      <label>Nome completo</label><input type="text" id="pnome" readonly>
+      <label>E-mail</label><input type="email" id="pemail" readonly>
+      <label>Formação acadêmica</label><input type="text" id="pformacao" placeholder="Ex: Licenciatura em Matemática – USP">
+      <label>Apresentação</label><textarea rows="3" id="pbio" placeholder="Fale sobre sua experiência e metodologia..."></textarea>
+      <button class="btn btn-largo" style="width:100%" onclick="irEtapa(2)">Continuar</button>
+    </div>
+
+    <div class="etapa">
+      <h1>Suas aulas</h1><small>Conte sobre suas aulas</small>
+      <label>Disciplinas que você ensina</label>
+      <div id="pdisciplinas"><small>Carregando disciplinas...</small>
+      </div>
+      <label>Valor da aula (R$/hora)</label><input type="number" id="pvalor" placeholder="80">
+      <button class="btn btn-largo" style="width:100%;margin-top:20px" onclick="irEtapa(3)">Continuar</button>
+    </div>
+
+    <div class="etapa">
+      <h1>Últimos detalhes</h1><small>Foto e disponibilidade</small>
+      <label>Foto de perfil (JPG ou PNG, máx 5 MB)</label><input type="file" id="pfoto" accept="image/jpeg,image/png">
+      <label>Disponibilidade</label>
+      <div id="pdisp">
+        <button class="chip" onclick="this.classList.toggle('ativo')">Seg</button>
+        <button class="chip" onclick="this.classList.toggle('ativo')">Ter</button>
+        <button class="chip" onclick="this.classList.toggle('ativo')">Qua</button>
+        <button class="chip" onclick="this.classList.toggle('ativo')">Qui</button>
+        <button class="chip" onclick="this.classList.toggle('ativo')">Sex</button>
+        <button class="chip" onclick="this.classList.toggle('ativo')">Sáb</button>
+      </div>
+      <label>Horário disponível (vale para todos os dias marcados)</label>
+      <div class="linha"><input type="time" id="phini" value="08:00"> <small>até</small> <input type="time" id="phfim" value="18:00"></div>
+      <label>Comprovante de formação (PDF, JPG ou PNG)</label><input type="file" id="pcomprovante" accept="image/jpeg,image/png,application/pdf">
+      <p><input type="checkbox" id="pautoriza"> <small>Autorizo a análise do meu perfil pela equipe Mentora.</small></p>
+      <button class="btn btn-largo" id="penviar" style="width:100%" onclick="enviarSolicitacao()">Enviar para análise</button>
+    </div>
+  </div>
+</div>
+<script src="api.js"></script>
+<script src="script.js"></script>
+<script>
+  if (exigirLogin()) {
+    montarMenu();
+    document.getElementById("pnome").value = usuario().nome;   // nome e e-mail vêm da conta
+    document.getElementById("pemail").value = usuario().email;
+    carregarDisciplinasCadastro();
+    irEtapa(1);
+    jaCadastrado();
+  }
+</script>
+</body></html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentora</title>
+<link rel="icon" type="image/png" href="Imagens/capelo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="menu"></div>
+<section class="hero">
+  <div>
+    <span class="tag">● +2.400 professores verificados</span>
+    <h1>Aprenda com quem entende</h1>
+    <p>A Mentora conecta alunos e professores particulares de forma simples e segura. Pagamento protegido, confirmação por aula realizada.</p>
+    <a href="cadastro.html" class="btn">Quero aprender</a>
+    <a href="cadastro.html" class="btn btn-claro">Quero dar aulas</a>
+  </div>
+  <div>
+    <div class="card"><b>2.4k+</b><br><small>Professores ativos</small></div>
+    <div class="card"><b>18k+</b><br><small>Alunos na plataforma</small></div>
+    <div class="card"><b>4.9 ★</b><br><small>Avaliação média</small></div>
+  </div>
+</section>
+
+<div class="container" id="como">
+  <h2 class="centro">Como funciona</h2>
+  <p class="centro"><small>Em poucos passos, você encontra o professor ideal e agenda sua primeira aula.</small></p>
+  <div class="grade">
+    <div class="card"><h3>🔍 Busque</h3><small>Filtre por disciplina, horário e valor da aula.</small></div>
+    <div class="card"><h3>📅 Agende</h3><small>Escolha data e horário. Simples e rápido.</small></div>
+    <div class="card"><h3>🔒 Pague com segurança</h3><small>O valor fica protegido até a confirmação da aula.</small></div>
+    <div class="card"><h3>⭐ Confirme e avalie</h3><small>Confirme a aula e avalie sua experiência.</small></div>
+  </div>
+
+  <h2 style="margin-top:50px">Professores em destaque</h2>
+  <p><small>Alguns dos nossos professores mais bem avaliados</small> <a href="buscar.html" class="laranja" style="float:right">Ver todos →</a></p>
+  <div id="lista" class="grade"></div>
+
+  <div class="cta">
+    <h2>Você também pode ser professor</h2>
+    <p>Compartilhe seu conhecimento, crie seu próprio horário e ganhe dinheiro fazendo o que você ama.</p>
+    <a href="cadastro.html" class="btn">Quero dar aulas</a>
+    <a href="#" class="btn btn-claro">Saiba mais</a>
+  </div>
+</div>
+
+<footer class="rodape"><span class="logo">Mentora</span><span>© 2026 Mentora · Todos os direitos reservados</span><a href="admin.html">Acesso administrativo</a></footer>
+<script src="api.js"></script>
+<script src="script.js"></script>
+<script>
+  montarMenu();
+  carregarDestaques(); // busca na API os 4 professores mais bem avaliados
+</script>
+</body></html>

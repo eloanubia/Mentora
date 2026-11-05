@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentora · Administração</title>
+<link rel="icon" type="image/png" href="Imagens/capelo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="menu"></div>
+
+<!-- Tela de acesso: só quem sabe a senha vê o painel -->
+<div class="container estreito" id="login">
+  <h1>Acesso administrativo</h1>
+  <small>Área restrita à equipe Mentora. Entre com uma conta de administrador.</small>
+  <form class="card" onsubmit="entrarAdmin(event)">
+    <label>E-mail</label><input type="email" name="email" required>
+    <label>Senha</label><input type="password" name="senha" required>
+    <button class="btn btn-largo" style="width:100%">Entrar</button>
+  </form>
+</div>
+
+<!-- Painel (começa escondido até o login) -->
+<div id="painel" style="display:none">
+  <div class="cabecalho"><div class="container" style="margin:0 auto;padding:20px">
+    <div class="linha">
+      <div class="cresce"><h2 style="margin:0">Análise de professores</h2><small>Confira os dados e o comprovante de cada candidato antes de aprovar.</small></div>
+      <button class="btn btn-claro" onclick="sairAdmin()">🚪 Sair</button>
+    </div>
+    <!-- Cada botão mostra quantas candidaturas existem naquele status -->
+    <div class="abas" id="filtros">
+      <button data-filtro="pendente" onclick="escolherFiltro('pendente')">Pendentes <b id="qtd-pendente"></b></button>
+      <button data-filtro="ativo" onclick="escolherFiltro('ativo')">Aprovados <b id="qtd-ativo"></b></button>
+      <button data-filtro="recusado" onclick="escolherFiltro('recusado')">Recusados <b id="qtd-recusado"></b></button>
+      <button data-filtro="inativo" onclick="escolherFiltro('inativo')">Inativos <b id="qtd-inativo"></b></button>
+    </div>
+  </div></div>
+
+  <div class="container">
+    <div id="vistaLista"><div id="listaCandidatos"></div></div>
+    <div id="detalhe" style="display:none">
+      <a href="#" onclick="voltarLista(); return false;">← Voltar para a lista</a>
+      <div id="conteudoDetalhe" style="margin-top:16px"></div>
+    </div>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script src="script.js"></script>
+<script>
+  montarMenu();
+  iniciarAdmin(); // se já entrou antes nesta sessão, abre direto o painel
+</script>
+</body></html>

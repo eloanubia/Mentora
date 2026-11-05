@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentora</title>
+<link rel="icon" type="image/png" href="Imagens/capelo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="menu"></div>
+<div class="container estreito">
+  <a href="index.html">← Voltar</a>
+  <h1>Entrar</h1>
+  <p><small>Acesse sua conta Mentora</small></p>
+  <form class="card" onsubmit="entrar(event)">
+    <label>E-mail</label><input type="email" name="email" placeholder="maria@email.com" required>
+    <label>Senha</label><input type="password" name="senha" required>
+    <button class="btn btn-largo" style="width:100%">Entrar</button>
+    <p class="centro"><small>Ainda não tem conta? <a href="cadastro.html" class="laranja">Cadastre-se</a></small></p>
+  </form>
+</div>
+<script src="api.js"></script>
+<script src="script.js"></script>
+<script>montarMenu();</script>
+</body></html>

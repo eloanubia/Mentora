@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentora</title>
+<link rel="icon" type="image/png" href="Imagens/capelo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="menu"></div>
+<div class="cabecalho"><div class="container linha" style="margin:0 auto;padding:20px">
+  <div class="cresce"><h2 id="ola" style="margin:0"></h2><small>O que você quer aprender hoje?</small></div>
+  <div class="abas">
+    <button data-aba="buscar" class="ativo" onclick="trocarAba('buscar')">Buscar</button>
+    <button data-aba="aulas" onclick="trocarAba('aulas')">Minhas Aulas</button>
+    <button data-aba="perfil" onclick="trocarAba('perfil')">Perfil</button>
+  </div>
+</div></div>
+
+<div class="container">
+  <div class="aba ativa" id="aba-buscar">
+    <input type="text" id="busca" placeholder="Buscar professor ou disciplina..." oninput="filtrarDigitando()">
+    <div id="categorias" style="margin:14px 0"></div>
+    <p><small id="total"></small></p>
+    <div id="lista" class="grade"></div>
+  </div>
+
+  <div class="aba" id="aba-aulas">
+    <h2>Minhas aulas</h2>
+    <div id="aulas"></div>
+  </div>
+
+  <div class="aba" id="aba-perfil">
+    <h2>Meu perfil</h2>
+    <div class="card linha"><span class="avatar grande" id="inicial" style="background:var(--laranja);color:#fff;border-radius:50%"></span>
+      <div><b id="nome"></b><br><small class="laranja" id="email"></small></div></div>
+    <a href="professor-cadastro.html" class="menu-item">🎓 Quero dar aulas</a>
+    <a href="#" class="menu-item" onclick="sair(); return false;">🚪 Sair</a>
+  </div>
+
+</div>
+<script src="api.js"></script>
+<script src="script.js"></script>
+<script>
+  if (exigirLogin()) {   // buscar.html tem a área do aluno (Minhas aulas e Perfil), então exige login
+    montarMenu();
+    mostrarPerfilAluno();
+    montarCategorias();
+    filtrar();
+    mostrarAulas();
+  }
+</script>
+</body></html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentora</title>
+<link rel="icon" type="image/png" href="Imagens/capelo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="menu"></div>
+<div class="container estreito">
+  <a href="index.html">← Voltar</a>
+  <h1>Criar conta</h1>
+  <p><small>Crie uma conta gratuita e comece a usar a Mentora</small></p>
+  <form class="card" onsubmit="criarConta(event)">
+    <label>Nome completo</label><input type="text" name="nome" placeholder="Maria Silva" required>
+    <label>E-mail</label><input type="email" name="email" placeholder="maria@email.com" required>
+    <label>Senha</label><input type="password" name="senha" required>
+    <label>Confirmar senha</label><input type="password" name="confirmar" required>
+    <p><input type="checkbox" required> <small>Concordo com os Termos de Uso e a Política de Privacidade.</small></p>
+    <button class="btn btn-largo" style="width:100%">Criar conta</button>
+    <p class="centro"><small>Já tem conta? <a href="entrar.html" class="laranja">Entrar</a></small></p>
+  </form>
+</div>
+<script src="api.js"></script>
+<script src="script.js"></script>
+<script>montarMenu();</script>
+</body></html>
