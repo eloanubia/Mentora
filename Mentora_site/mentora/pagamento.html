@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pagamento - Mentora</title>
+
+    <link rel="icon" type="image/png" href="Imagens/capelo.png">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Organiza o conteúdo principal da página */
+        .pagamento-container {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 25px;
+        }
+
+        /* Título da página */
+        .pagamento-container h1 {
+            text-align: center;
+            color: var(--laranja);
+            margin-bottom: 10px;
+        }
+
+        /* Aviso de que o pagamento é apenas uma simulação */
+        .aviso-simulacao {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #666;
+        }
+
+        /* Cartão que apresenta os dados da solicitação */
+        .resumo-pagamento {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .resumo-pagamento p {
+            margin: 12px 0;
+        }
+
+        /* Área das opções de pagamento */
+        .opcoes-pagamento {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .opcoes-pagamento h2 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        /* Cada opção de pagamento */
+        .opcao {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .opcao input {
+            margin-right: 8px;
+        }
+
+        /* Botão para confirmar a simulação */
+        .botao-pagamento {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Mensagem exibida após a simulação */
+        .resultado-pagamento {
+            display: none;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            background: #e8f5e9;
+            color: #256029;
+            text-align: center;
+        }
+
+        /* Ajustes para telas pequenas */
+        @media (max-width: 600px) {
+            .pagamento-container {
+                margin: 20px 12px;
+                padding: 15px;
+            }
+
+            .resumo-pagamento,
+            .opcoes-pagamento {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Menu de navegação do site -->
+    <div id="menu"></div>
+
+    <main class="pagamento-container">
+
+        <h1>Pagamento da aula</h1>
+
+        <p class="aviso-simulacao">
+            Esta é uma demonstração. Nenhuma cobrança real será realizada.
+        </p>
+
+        <!-- Informações da solicitação selecionada -->
+        <section class="resumo-pagamento">
+            <h2>Resumo da solicitação</h2>
+
+            <p><strong>Professor:</strong> <span id="nomeProfessor">Carregando...</span></p>
+
+            <p><strong>Disciplina:</strong> <span id="nomeDisciplina">Carregando...</span></p>
+
+            <p><strong>Data e horário:</strong> <span id="dataHorario">Carregando...</span></p>
+
+            <p><strong>Valor:</strong> <span id="valorAula">Carregando...</span></p>
+        </section>
+
+        <!-- Opções para simular o pagamento -->
+        <section class="opcoes-pagamento">
+            <h2>Escolha uma forma de pagamento</h2>
+
+            <label class="opcao">
+                <input type="radio" name="formaPagamento" value="Pix" checked>
+                Pix
+            </label>
+
+            <label class="opcao">
+                <input type="radio" name="formaPagamento" value="Cartão de crédito">
+                Cartão de crédito
+            </label>
+
+            <label class="opcao">
+                <input type="radio" name="formaPagamento" value="Boleto">
+                Boleto
+            </label>
+
+            <button
+                type="button"
+                class="btn botao-pagamento"
+                onclick="simularPagamento()">
+                Confirmar pagamento simulado
+            </button>
+
+            <!-- Resultado da simulação -->
+            <div id="resultadoPagamento" class="resultado-pagamento"></div>
+        </section>
+
+    </main>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+
+   
+<script>
+    // Monta o menu de navegação
+    montarMenu();
+
+    // Recupera os dados da solicitação salvos no navegador
+    const dadosPagamento = JSON.parse(
+        localStorage.getItem("mentoraPagamento")
+    );
+
+    // Preenche os dados da aula na tela
+    if (dadosPagamento) {
+        document.getElementById("nomeProfessor").textContent =
+            dadosPagamento.nomeProfessor;
+
+        document.getElementById("nomeDisciplina").textContent =
+            dadosPagamento.disciplina;
+
+        document.getElementById("dataHorario").textContent =
+            dadosPagamento.dataHorario;
+
+        document.getElementById("valorAula").textContent =
+            Number(dadosPagamento.valor).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            });
+    } else {
+        // Informa quando não existe solicitação salva
+        document.getElementById("nomeProfessor").textContent =
+            "Solicitação não encontrada";
+
+        document.getElementById("nomeDisciplina").textContent = "-";
+        document.getElementById("dataHorario").textContent = "-";
+        document.getElementById("valorAula").textContent = "-";
+    }
+
+    // Realiza a simulação do pagamento
+    function simularPagamento() {
+        if (!dadosPagamento) {
+            alert("Não encontramos os dados da solicitação.");
+            return;
+        }
+
+        // Identifica a forma de pagamento escolhida
+        const formaEscolhida = document.querySelector(
+            'input[name="formaPagamento"]:checked'
+        );
+
+        if (!formaEscolhida) {
+            alert("Escolha uma forma de pagamento.");
+            return;
+        }
+
+        // Guarda o resultado da simulação no navegador
+        const pagamento = {
+            idSolicitacao: dadosPagamento.idSolicitacao,
+            forma: formaEscolhida.value,
+            status: "simulado"
+        };
+
+        localStorage.setItem(
+            "mentoraPagamentoSimulado",
+            JSON.stringify(pagamento)
+        );
+
+        // Exibe o resultado para o aluno
+        const resultado = document.getElementById("resultadoPagamento");
+
+        resultado.style.display = "block";
+        resultado.textContent =
+            "Pagamento simulado registrado com " +
+            formaEscolhida.value +
+            "! Sua solicitação ainda aguarda a resposta do professor.";
+    }
+</script>
+</body>
+</html>

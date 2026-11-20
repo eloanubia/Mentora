@@ -1,56 +1,161 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mentora</title>
-<link rel="icon" type="image/png" href="Imagens/capelo.png">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+
+  <!-- Permite que a página se adapte à largura da tela do dispositivo -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Mentora</title>
+
+  <!-- Ícone exibido na aba do navegador -->
+  <link rel="icon" type="image/png" href="Imagens/capelo.png">
+
+  <!-- Conecta o arquivo CSS responsável pela aparência e responsividade -->
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div id="menu"></div>
-<section class="hero">
-  <div>
-    <span class="tag">● +2.400 professores verificados</span>
-    <h1>Aprenda com quem entende</h1>
-    <p>A Mentora conecta alunos e professores particulares de forma simples e segura. Pagamento protegido, confirmação por aula realizada.</p>
-    <a href="cadastro.html" class="btn">Quero aprender</a>
-    <a href="cadastro.html" class="btn btn-claro">Quero dar aulas</a>
-  </div>
-  <div>
-    <div class="card"><b>2.4k+</b><br><small>Professores ativos</small></div>
-    <div class="card"><b>18k+</b><br><small>Alunos na plataforma</small></div>
-    <div class="card"><b>4.9 ★</b><br><small>Avaliação média</small></div>
-  </div>
-</section>
 
-<div class="container" id="como">
-  <h2 class="centro">Como funciona</h2>
-  <p class="centro"><small>Em poucos passos, você encontra o professor ideal e agenda sua primeira aula.</small></p>
-  <div class="grade">
-    <div class="card"><h3>🔍 Busque</h3><small>Filtre por disciplina, horário e valor da aula.</small></div>
-    <div class="card"><h3>📅 Agende</h3><small>Escolha data e horário. Simples e rápido.</small></div>
-    <div class="card"><h3>🔒 Pague com segurança</h3><small>O valor fica protegido até a confirmação da aula.</small></div>
-    <div class="card"><h3>⭐ Confirme e avalie</h3><small>Confirme a aula e avalie sua experiência.</small></div>
+  <!-- O menu é criado pelo JavaScript através da função montarMenu() -->
+  <div id="menu"></div>
+
+  <!-- Seção principal da página, localizada logo abaixo do menu -->
+  <section class="hero">
+
+    <div>
+      <!-- Etiqueta que destaca a quantidade de professores verificados -->
+      <span class="tag">● +2.400 professores verificados</span>
+
+      <h1>Aprenda com quem entende</h1>
+
+      <p>
+        A Mentora conecta alunos e professores particulares de forma
+        simples e segura. Pagamento protegido, confirmação por aula realizada.
+      </p>
+
+      <!-- Botões que direcionam para a página de cadastro -->
+      <a href="cadastro.html" class="btn">Quero aprender</a>
+      <a href="cadastro.html" class="btn btn-claro">Quero dar aulas</a>
+    </div>
+
+    <!-- Cards com informações e estatísticas da plataforma -->
+    <div>
+      <div class="card">
+        <b>2.4k+</b>
+        <br>
+        <small>Professores ativos</small>
+      </div>
+
+      <div class="card">
+        <b>18k+</b>
+        <br>
+        <small>Alunos na plataforma</small>
+      </div>
+
+      <div class="card">
+        <b>4.9 ★</b>
+        <br>
+        <small>Avaliação média</small>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Container que organiza e limita a largura do conteúdo da página -->
+  <div class="container" id="como">
+
+    <h2 class="centro">Como funciona</h2>
+
+    <p class="centro">
+      <small>
+        Em poucos passos, você encontra o professor ideal e agenda sua primeira aula.
+      </small>
+    </p>
+
+    <!-- Grid organiza os cards em colunas e permite adaptação em telas menores -->
+    <div class="grade">
+
+      <div class="card">
+        <h3>🔍 Busque</h3>
+        <small>Filtre por disciplina, horário e valor da aula.</small>
+      </div>
+
+      <div class="card">
+        <h3>📅 Agende</h3>
+        <small>Escolha data e horário. Simples e rápido.</small>
+      </div>
+
+      <div class="card">
+        <h3>🔒 Pague com segurança</h3>
+        <small>O valor fica protegido até a confirmação da aula.</small>
+      </div>
+
+      <div class="card">
+        <h3>⭐ Confirme e avalie</h3>
+        <small>Confirme a aula e avalie sua experiência.</small>
+      </div>
+
+    </div>
+
+    <!-- Seção que apresenta os professores em destaque -->
+    <h2 style="margin-top:50px">Professores em destaque</h2>
+
+    <p>
+      <small>Alguns dos nossos professores mais bem avaliados</small>
+
+      <!-- Link para visualizar todos os professores -->
+      <a href="buscar.html" class="laranja link-todos">Ver todos →</a>
+    </p>
+
+    <!-- Os cards dos professores são inseridos pelo JavaScript após receber os dados da API -->
+    <div id="lista" class="grade"></div>
+
+    <!-- CTA (Call to Action): seção que incentiva o usuário a se cadastrar como professor -->
+    <div class="cta">
+
+      <h2>Você também pode ser professor</h2>
+
+      <p>
+        Compartilhe seu conhecimento, crie seu próprio horário e ganhe
+        dinheiro fazendo o que você ama.
+      </p>
+
+      <a href="cadastro.html" class="btn">Quero dar aulas</a>
+
+      <!-- Link ainda sem destino específico -->
+      <a href="#" class="btn btn-claro">Saiba mais</a>
+
+    </div>
+
   </div>
 
-  <h2 style="margin-top:50px">Professores em destaque</h2>
-  <p><small>Alguns dos nossos professores mais bem avaliados</small> <a href="buscar.html" class="laranja" style="float:right">Ver todos →</a></p>
-  <div id="lista" class="grade"></div>
+  <!-- Rodapé com identificação da plataforma e acesso administrativo -->
+  <footer class="rodape">
 
-  <div class="cta">
-    <h2>Você também pode ser professor</h2>
-    <p>Compartilhe seu conhecimento, crie seu próprio horário e ganhe dinheiro fazendo o que você ama.</p>
-    <a href="cadastro.html" class="btn">Quero dar aulas</a>
-    <a href="#" class="btn btn-claro">Saiba mais</a>
-  </div>
-</div>
+    <span class="logo">Mentora</span>
 
-<footer class="rodape"><span class="logo">Mentora</span><span>© 2026 Mentora · Todos os direitos reservados</span><a href="admin.html">Acesso administrativo</a></footer>
-<script src="api.js"></script>
-<script src="script.js"></script>
-<script>
-  montarMenu();
-  carregarDestaques(); // busca na API os 4 professores mais bem avaliados
-</script>
-</body></html>
+    <span>© 2026 Mentora · Todos os direitos reservados</span>
+
+    <a href="admin.html">Acesso administrativo</a>
+
+  </footer>
+
+  <!-- Carrega primeiro a API, responsável pela comunicação com o servidor -->
+  <script src="api.js"></script>
+
+  <!-- Carrega as funções responsáveis pelas interações da página -->
+  <script src="script.js"></script>
+
+  <script>
+    // Cria o menu da página através do JavaScript
+    montarMenu();
+
+    // Busca na API os professores que serão exibidos na seção de destaques
+    carregarDestaques();
+  </script>
+
+</body>
+</html>

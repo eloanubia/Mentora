@@ -1,12 +1,21 @@
-# Senhas
+# Arquivos privados
 .env
+**/.env
 
-# Ambiente virtual Python
+# Ambientes virtuais
 venv/
+**/venv/
 
 # Arquivos temporários Python
 __pycache__/
+**/__pycache__/
 *.pyc
 
-# Configurações locais do VS Code
+# Configurações locais
 .vscode/
+
+# Arquivos enviados pelos usuários
+API-mentora/uploads/
+
+# Dados locais de teste com informações pessoais
+cadastro.json

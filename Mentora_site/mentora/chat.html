@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversas | Mentora</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Área principal da página do chat */
+        .chat-pagina {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 20px;
+            color: #49352d;
+        }
+
+        /* Cabeçalho da página */
+        .chat-cabecalho {
+            margin-bottom: 25px;
+        }
+
+        .chat-cabecalho h1 {
+            margin-bottom: 8px;
+            color: var(--laranja);
+        }
+
+        .chat-cabecalho p {
+            color: #806f64;
+        }
+
+        .chat-cabecalho a {
+            color: var(--laranja);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .chat-cabecalho a:hover {
+            text-decoration: underline;
+        }
+
+        /* Estrutura principal do chat */
+        .chat-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            min-height: 550px;
+            background: #fff;
+            border: 1px solid #eadbd0;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(73, 53, 45, 0.08);
+        }
+
+        /* Lista de conversas */
+        .chat-lista {
+            border-right: 1px solid #eadbd0;
+            padding: 22px;
+            background: #fffaf6;
+        }
+
+        .chat-lista h2 {
+            font-size: 21px;
+            color: var(--laranja);
+            margin-bottom: 20px;
+        }
+
+        /* Cada conversa da lista */
+        .conversa-item {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            background: transparent;
+            text-align: left;
+            cursor: pointer;
+            color: #49352d;
+            margin-bottom: 8px;
+            transition: background 0.2s, border 0.2s;
+        }
+
+        .conversa-item:hover,
+        .conversa-item.ativa {
+            background: #f5e8dc;
+            border-color: #ead5c5;
+        }
+
+        .conversa-item strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--laranja);
+        }
+
+        .conversa-item small {
+            color: #806f64;
+        }
+
+        /* Área onde ficam as mensagens */
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            background: #fff;
+        }
+
+        /* Nome do contato */
+        .chat-topo {
+            padding: 20px;
+            border-bottom: 1px solid #eadbd0;
+            font-weight: bold;
+            color: var(--laranja);
+            background: #fffaf6;
+        }
+
+        /* Espaço de visualização das mensagens */
+        .chat-mensagens {
+            flex: 1;
+            min-height: 350px;
+            max-height: 430px;
+            overflow-y: auto;
+            padding: 22px;
+            background: #fffdfb;
+        }
+
+        /* Balão das mensagens recebidas */
+        .mensagem {
+            width: fit-content;
+            max-width: 75%;
+            padding: 13px 16px;
+            margin-bottom: 13px;
+            border-radius: 15px 15px 15px 4px;
+            background: #f3e8df;
+            color: #49352d;
+            overflow-wrap: anywhere;
+            box-shadow: 0 2px 5px rgba(73, 53, 45, 0.05);
+        }
+
+        /* Balão das mensagens enviadas pelo usuário */
+        .mensagem.minha {
+            margin-left: auto;
+            border-radius: 15px 15px 4px 15px;
+            background: var(--laranja);
+            color: #fff;
+        }
+
+        .mensagem strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .mensagem small {
+            display: block;
+            margin-top: 7px;
+            font-size: 11px;
+            color: #806f64;
+        }
+
+        .mensagem.minha small {
+            color: #f8e5d9;
+        }
+
+        /* Campo de digitação e botão enviar */
+        .chat-formulario {
+            display: flex;
+            gap: 10px;
+            padding: 16px;
+            border-top: 1px solid #eadbd0;
+            background: #fffaf6;
+        }
+
+        .chat-formulario input {
+            flex: 1;
+            min-width: 0;
+            padding: 13px 15px;
+            border: 1px solid #dfcbbb;
+            border-radius: 12px;
+            background: #fff;
+            color: #49352d;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        .chat-formulario input:focus {
+            border-color: var(--laranja);
+            box-shadow: 0 0 0 3px rgba(166, 95, 62, 0.12);
+        }
+
+        .chat-formulario input::placeholder {
+            color: #a18e81;
+        }
+
+        /* Botão de enviar */
+        .chat-formulario button {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 12px;
+            background: var(--laranja);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .chat-formulario button:hover:not(:disabled) {
+            background: #87482f;
+            transform: translateY(-1px);
+        }
+
+        .chat-formulario button:disabled,
+        .chat-formulario input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Mensagens de orientação */
+        .chat-vazio {
+            padding: 25px;
+            text-align: center;
+            color: #927e71;
+        }
+
+        /* Ajustes para celulares e telas menores */
+        @media (max-width: 650px) {
+            .chat-pagina {
+                margin: 10px auto;
+                padding: 10px;
+            }
+
+            .chat-container {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .chat-lista {
+                border-right: 0;
+                border-bottom: 1px solid #eadbd0;
+                max-height: 220px;
+                overflow-y: auto;
+                padding: 15px;
+            }
+
+            .chat-mensagens {
+                min-height: 300px;
+                max-height: 400px;
+                padding: 15px;
+            }
+
+            .mensagem {
+                max-width: 90%;
+            }
+
+            .chat-formulario {
+                gap: 7px;
+                padding: 12px;
+            }
+
+            .chat-formulario input {
+                padding: 11px;
+            }
+
+            .chat-formulario button {
+                padding: 10px 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="chat-pagina">
+
+        <header class="chat-cabecalho">
+            <h1>Minhas conversas</h1>
+            <p>Converse com seus professores pelo Mentora.</p>
+            <a href="buscar.html">← Voltar ao site</a>
+        </header>
+
+        <section class="chat-container">
+
+            <!-- Lista de conversas -->
+            <aside class="chat-lista">
+                <h2>Conversas</h2>
+
+                <div id="listaConversas">
+                    <p class="chat-vazio">Carregando conversas...</p>
+                </div>
+            </aside>
+
+            <!-- Área principal da conversa -->
+            <section class="chat-area">
+
+                <div class="chat-topo" id="nomeContato">
+                    Selecione uma conversa
+                </div>
+
+                <div class="chat-mensagens" id="areaMensagens">
+                    <p class="chat-vazio">
+                        Escolha uma conversa para visualizar as mensagens.
+                    </p>
+                </div>
+
+                <!-- Formulário para enviar mensagens -->
+                <form class="chat-formulario" id="formMensagem">
+                    <input
+                        type="text"
+                        id="campoMensagem"
+                        placeholder="Digite sua mensagem..."
+                        maxlength="5000"
+                        autocomplete="off"
+                        disabled
+                    >
+
+                    <button type="submit" id="botaoEnviar" disabled>
+                        Enviar
+                    </button>
+                </form>
+
+            </section>
+        </section>
+    </main>
+
+    <script src="api.js"></script>
+
+    <script>
+        // Elementos da tela
+        const listaConversas = document.getElementById("listaConversas");
+        const areaMensagens = document.getElementById("areaMensagens");
+        const nomeContato = document.getElementById("nomeContato");
+        const campoMensagem = document.getElementById("campoMensagem");
+        const botaoEnviar = document.getElementById("botaoEnviar");
+        const formMensagem = document.getElementById("formMensagem");
+
+        let conversaAtual = null;
+
+        // Guarda o ID do usuário que está conectado.
+        let idUsuarioLogado = null;
+
+        // Busca o ID do usuário que está conectado.
+        async function carregarUsuarioLogado() {
+            try {
+                const usuarioLogado = await api("/api/me");
+                idUsuarioLogado = usuarioLogado.id;
+            } catch (erro) {
+                console.error("Não foi possível identificar o usuário:", erro);
+            }
+        }
+
+        // Protege o conteúdo das mensagens antes de exibi-lo no HTML.
+        function escapar(texto) {
+            const elemento = document.createElement("div");
+            elemento.textContent = texto ?? "";
+            return elemento.innerHTML;
+        }
+
+        // Carrega as conversas do usuário.
+        async function carregarConversas() {
+            try {
+                const conversas = await api("/api/conversas");
+
+                listaConversas.innerHTML = "";
+
+                if (!conversas.length) {
+                    listaConversas.innerHTML =
+                        '<p class="chat-vazio">Você ainda não possui conversas.</p>';
+                    return;
+                }
+
+                conversas.forEach(conversa => {
+                    const botao = document.createElement("button");
+                    botao.className = "conversa-item";
+
+                    botao.innerHTML = `
+                        <strong>${escapar(conversa.nome_participante)}</strong>
+                        <small>${escapar(conversa.ultima_mensagem || "Nenhuma mensagem ainda")}</small>
+                    `;
+
+                    botao.addEventListener("click", () => {
+                        abrirConversa(
+                            conversa.id_conversa,
+                            conversa.nome_participante
+                        );
+                    });
+
+                    listaConversas.appendChild(botao);
+                });
+
+                const idUrl = new URLSearchParams(window.location.search).get("id");
+
+                if (idUrl) {
+                    const selecionada = conversas.find(
+                        c => String(c.id_conversa) === String(idUrl)
+                    );
+
+                    if (selecionada) {
+                        abrirConversa(
+                            selecionada.id_conversa,
+                            selecionada.nome_participante
+                        );
+                    }
+                }
+
+            } catch (erro) {
+                listaConversas.innerHTML =
+                    '<p class="chat-vazio">Não foi possível carregar as conversas. Entre novamente na sua conta.</p>';
+            }
+        }
+
+        // Abre uma conversa e carrega seu histórico.
+        async function abrirConversa(id, nome) {
+            conversaAtual = id;
+            nomeContato.textContent = nome;
+
+            campoMensagem.disabled = false;
+            botaoEnviar.disabled = false;
+
+            areaMensagens.innerHTML =
+                '<p class="chat-vazio">Carregando mensagens...</p>';
+
+            try {
+                const mensagens = await api(
+                    `/api/conversas/${id}/mensagens`
+                );
+
+                areaMensagens.innerHTML = "";
+
+                mensagens.forEach(mensagem => {
+                    const elemento = document.createElement("div");
+
+                    // Verifica se a mensagem foi enviada pelo usuário conectado.
+                    elemento.className =
+                        Number(mensagem.id_remetente) === Number(idUsuarioLogado)
+                            ? "mensagem minha"
+                            : "mensagem";
+
+                    elemento.innerHTML = `
+                        <strong>${escapar(mensagem.nome_remetente)}</strong>
+                        <div>${escapar(mensagem.mensagem)}</div>
+                        <small>${escapar(mensagem.data_envio || "")}</small>
+                    `;
+
+                    areaMensagens.appendChild(elemento);
+                });
+
+                if (!mensagens.length) {
+                    areaMensagens.innerHTML =
+                        '<p class="chat-vazio">Envie a primeira mensagem!</p>';
+                }
+
+                areaMensagens.scrollTop = areaMensagens.scrollHeight;
+
+            } catch (erro) {
+                areaMensagens.innerHTML =
+                    '<p class="chat-vazio">Não foi possível carregar as mensagens.</p>';
+            }
+        }
+
+        // Envia uma mensagem para a conversa selecionada.
+        formMensagem.addEventListener("submit", async function(evento) {
+            evento.preventDefault();
+
+            const mensagem = campoMensagem.value.trim();
+
+            if (!mensagem || !conversaAtual) return;
+
+            botaoEnviar.disabled = true;
+
+            try {
+                await api(`/api/conversas/${conversaAtual}/mensagens`, {
+                    metodo: "POST",
+                    corpo: { mensagem }
+                });
+
+                campoMensagem.value = "";
+
+                await abrirConversa(
+                    conversaAtual,
+                    nomeContato.textContent
+                );
+
+                await carregarConversas();
+
+            } catch (erro) {
+                alert("Não foi possível enviar a mensagem.");
+            } finally {
+                botaoEnviar.disabled = false;
+            }
+        });
+
+        // Busca o usuário conectado e depois carrega as conversas.
+        async function iniciarChat() {
+            await carregarUsuarioLogado();
+            await carregarConversas();
+        }
+
+        // Inicia a tela.
+        iniciarChat();
+    </script>
+
+</body>
+</html>

@@ -11,6 +11,7 @@ from database import Database
 from disciplina import DisciplinaController, DisciplinaRepository, DisciplinaService
 from erros import ErroApi
 from notificacao import NotificacaoController, NotificacaoRepository, NotificacaoService
+from chat import ChatController, ChatRepository, ChatService
 from professor import ProfessorController, ProfessorRepository, ProfessorService
 from seguranca import Autenticacao, Token
 from usuario import UsuarioController, UsuarioRepository, UsuarioService
@@ -51,11 +52,14 @@ class Api:
         # notificações (aluno e professor)
         notificacoes = NotificacaoController(NotificacaoService(NotificacaoRepository(db)), autenticacao)
 
+        # chat (conversas entre alunos e professores)
+        chat = ChatController(ChatService(ChatRepository(db)), autenticacao)
+
         # admin (aprovar professores)
         admin = AdminController(AdminService(AdminRepository(db)), autenticacao, arquivos)
 
         for modulo in (usuarios, disciplinas, professores, aulas, cadastro_prof,
-                       area_prof, notificacoes, admin):
+                       area_prof, notificacoes, chat, admin):
             self.app.register_blueprint(modulo.bp)
 
         self.app.add_url_rule("/api/status", view_func=self.status)

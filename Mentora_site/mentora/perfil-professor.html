@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mentora</title>
-<link rel="icon" type="image/png" href="Imagens/capelo.png">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mentora</title>
+  <link rel="icon" type="image/png" href="Imagens/capelo.png">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div id="menu"></div>
-<div class="container estreito">
-  <a href="#" onclick="history.back(); return false;">← Voltar</a>
-  <div id="conteudo" style="margin-top:16px"></div>
-</div>
-<script src="api.js"></script>
-<script src="script.js"></script>
-<script>
-  montarMenu();
-  mostrarPerfilDoProfessor();
-</script>
-</body></html>
+
+  <!-- Cabeçalho -->
+  <div id="menu"></div>
+
+  <!-- Agrupa os elementos, controla a largura e utiliza a classe estreito do CSS -->
+  <div class="container estreito">
+
+    <!-- Ao clicar em voltar, o usuário retorna à página anterior -->
+    <a href="#" onclick="history.back(); return false;">← Voltar</a>
+
+    <!-- O JavaScript preenche esta área com as informações do professor -->
+    <div id="conteudo" style="margin-top:16px"></div>
+
+  </div>
+
+  <script src="api.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    montarMenu(); // Cria e exibe o menu de navegação da Mentora
+    mostrarPerfilDoProfessor(); // Busca e exibe as informações do perfil do professor
+  </script>
+
+</body>
+</html>

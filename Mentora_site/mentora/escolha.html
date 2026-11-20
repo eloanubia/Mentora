@@ -1,32 +1,99 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mentora</title>
-<link rel="icon" type="image/png" href="Imagens/capelo.png">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+
+  <!-- Permite que a página se adapte à largura da tela do dispositivo -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Mentora</title>
+  <link rel="icon" type="image/png" href="Imagens/capelo.png">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div id="menu"></div>
-<div class="container estreito centro" style="margin-top:80px">
-  <span class="avatar grande" id="inicial" style="background:var(--laranja);color:#fff;border-radius:50%"></span>
-  <h1 id="ola"></h1>
-  <p><small>Como você deseja usar a Mentora hoje?</small></p>
-  <div class="grade">
-    <a href="buscar.html" class="card" style="background:var(--laranja);color:#fff"><h3>Quero aprender</h3><small style="color:#fff">Busque professores e agende aulas</small></a>
-    <a href="professor-cadastro.html" class="card"><h3>Quero dar aulas</h3><small>Cadastre seu perfil e comece a ensinar</small></a>
+
+  <!-- O menu é criado pelo JavaScript através da função montarMenu() -->
+  <div id="menu"></div>
+
+  <!-- Container centralizado e com largura reduzida para organizar as opções -->
+  <div class="container estreito centro" style="margin-top:clamp(24px, 8vw, 80px)">
+
+    <!-- Avatar que recebe a primeira letra do nome do usuário pelo JavaScript -->
+    <span
+      class="avatar grande"
+      id="inicial"
+      style="background:var(--laranja); color:#fff; border-radius:50%">
+    </span>
+    <h1 id="ola"></h1>   <!-- Saudação personalizada com o nome do usuário logado -->
+    <p>
+      <small>Como você deseja usar a Mentora hoje?</small>
+    </p>
+
+    <!-- Grid organiza as opções em colunas no computador e em uma coluna no celular -->
+    <div class="grade">
+
+      <!-- Opção para acessar a plataforma como aluno -->
+      <a href="buscar.html" class="card" style="background:var(--laranja); color:#fff">
+
+        <h3>Quero aprender</h3>
+
+        <small style="color:#fff">
+          Busque professores e agende aulas
+        </small>
+
+      </a>
+
+      <!-- Opção para realizar o cadastro como professor -->
+      <a href="professor-cadastro.html" class="card">
+
+        <h3>Quero dar aulas</h3>
+
+        <small>
+          Cadastre seu perfil e comece a ensinar
+        </small>
+
+      </a>
+
+    </div>
+
+    <!-- Informação sobre a possibilidade de alternar entre os perfis -->
+    <p>
+      <small>
+        Você pode alternar entre aluno e professor no seu perfil a qualquer momento.
+      </small>
+    </p>
+
   </div>
-  <p><small>Você pode alternar entre aluno e professor no seu perfil a qualquer momento.</small></p>
-</div>
-<script src="api.js"></script>
-<script src="script.js"></script>
-<script>
-  if (exigirLogin()) {
-    montarMenu();
-    const primeiro = usuario().nome.split(" ")[0] || "";
-    document.getElementById("inicial").textContent = primeiro[0] || "?";
-    document.getElementById("ola").textContent = "Olá" + (primeiro ? ", " + primeiro : "") + "! 👋";
-  }
-</script>
-</body></html>
+
+  <!-- Carrega primeiro a API, responsável pela comunicação com o servidor -->
+  <script src="api.js"></script>
+
+  <!-- Carrega as funções responsáveis pelas interações da página -->
+  <script src="script.js"></script>
+
+  <script>
+
+    // Verifica se o usuário está autenticado antes de exibir a página
+    if (exigirLogin()) {
+
+      // Cria o menu da página
+      montarMenu();
+
+      // Recupera o primeiro nome do usuário que está logado
+      const primeiro = usuario().nome.trim().split(/\s+/)[0] || "";
+
+      // Exibe a primeira letra do nome dentro do avatar
+      document.getElementById("inicial").textContent = primeiro[0] || "?";
+
+      // Exibe uma saudação personalizada com o primeiro nome
+      document.getElementById("ola").textContent =
+        "Olá" + (primeiro ? ", " + primeiro : "") + "! 👋";
+    }
+
+  </script>
+
+</body>
+</html>

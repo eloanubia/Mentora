@@ -1,75 +1,831 @@
-/* Cores do site guardadas em variáveis: se mudar aqui, muda em todas as páginas */
-:root { --laranja:#ff5100; --marrom:#4a2c2c; --creme:#f8f3e0; --borda:#e5dcc3; }
-* { box-sizing:border-box; }
-body { margin:0; font-family:Arial,sans-serif; background:var(--creme); color:var(--marrom); }
-h1,h2,h3,.logo { font-family:Georgia,serif; }
-a { color:inherit; text-decoration:none; }
-small { color:#7a6a5a; }
+/* ==========================================
+   CORES PRINCIPAIS DO SITE
+   Define as cores, fontes e estilos básicos.
+========================================== */
 
-/* Menu do topo */
-.topo { display:flex; justify-content:space-between; align-items:center; padding:14px 8%; border-bottom:1px solid var(--borda); }
-.logo { color:var(--laranja); font-size:24px; font-weight:bold; }
-.topo nav a { margin:0 12px; font-size:14px; }
-.topo > div a { margin-left:14px; font-size:14px; }
-
-/* Botões, avatar e etiquetas */
-.btn { display:inline-block; background:var(--laranja); color:#fff; border:0; border-radius:8px; padding:10px 18px; font-size:14px; cursor:pointer; }
-.btn-claro { background:#fff; color:var(--marrom); border:1px solid var(--borda); }
-.btn-largo { display:block; text-align:center; margin-top:12px; }
-.avatar { display:inline-block; width:36px; height:36px; line-height:36px; text-align:center; border-radius:50%; background:#ffe3d6; color:var(--laranja); }
-.grande { width:48px; height:48px; line-height:48px; border-radius:10px; background:var(--borda); color:var(--marrom); }
-.tag { display:inline-block; background:#ffe3d6; color:var(--laranja); border-radius:20px; padding:3px 10px; margin:2px; font-size:12px; }
-.laranja { color:var(--laranja); }
-
-/* Layout */
-.container { max-width:900px; margin:30px auto; padding:0 20px; }
-.estreito { max-width:480px; }
-.centro { text-align:center; }
-.grade { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
-.linha { display:flex; align-items:center; gap:12px; }
-.cresce { flex:1; }
-.card { background:#fff; border:1px solid var(--borda); border-radius:12px; padding:16px; margin-bottom:12px; }
-.preco { color:var(--laranja); font-weight:bold; font-size:18px; text-align:right; }
-
-/* Home */
-.hero { background:var(--marrom); color:var(--creme); padding:70px 8%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:30px; }
-.hero h1 { font-size:48px; margin:12px 0; max-width:420px; }
-.hero p { max-width:420px; }
-.hero .card { background:#5e3d3d; border:0; color:#fff; min-width:200px; }
-.cta { background:var(--marrom); color:var(--creme); border-radius:16px; padding:40px; margin:40px 0; }
-.rodape { display:flex; justify-content:space-between; padding:20px 8%; border-top:1px solid var(--borda); font-size:13px; }
-
-/* Formulários */
-label { display:block; font-size:13px; font-weight:bold; margin:14px 0 6px; }
-input[type=text], input[type=email], input[type=password], input[type=number], input[type=time], textarea {
-  width:100%; padding:10px; background:var(--creme); border:1px solid var(--borda); border-radius:8px; font-size:14px; }
-.chip { display:inline-block; background:var(--creme); border:1px solid var(--borda); border-radius:20px; padding:6px 14px; margin:3px; font-size:13px; cursor:pointer; color:var(--marrom); }
-.chip.ativo { background:var(--laranja); color:#fff; border-color:var(--laranja); }
-.barra { display:flex; gap:6px; margin:10px 0 20px; }
-.barra span { flex:1; height:4px; background:var(--borda); }
-.barra span.feita { background:var(--laranja); }
-.etapa { display:none; }
-
-/* Abas (Buscar/Minhas aulas/Perfil e área do professor) */
-.abas { display:flex; gap:8px; margin:20px 0; }
-.abas button { background:#fff; border:1px solid var(--borda); border-radius:8px; padding:8px 16px; cursor:pointer; color:var(--marrom); }
-.abas button.ativo { background:var(--laranja); color:#fff; border-color:var(--laranja); }
-.aba { display:none; }
-.aba.ativa { display:block; }
-.cabecalho { background:#fff; border-bottom:1px solid var(--borda); }
-.menu-item { display:block; background:#fff; border:1px solid var(--borda); border-radius:10px; padding:14px; margin-bottom:8px; }
-
-/* Ajustando a LOGO */
-.logo img {
-  width: 130px;
-  height: 45px;
-  object-fit: contain;
+:root {
+  --laranja:#ff5100;
+  --marrom:#4a2c2c;
+  --creme:#f8f3e0;
+  --borda:#e5dcc3;
 }
 
-/* Painel do administrador */
-.ok { color:#2e7d32; margin:6px 0; }
-.aviso { color:#b26a00; margin:6px 0; font-weight:bold; }
-.abas button b { margin-left:4px; }
+* {
+  box-sizing:border-box;
+}
 
-/* Foto de perfil do professor (cards, perfil e análise do admin) */
-.foto-prof { width:48px; height:48px; border-radius:10px; object-fit:cover; }
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--creme);
+  color:var(--marrom);
+}
+
+h1,h2,h3,.logo {
+  font-family:Georgia,serif;
+}
+
+a {
+  color:inherit;
+  text-decoration:none;
+}
+
+small {
+  color:#7a6a5a;
+}
+
+
+/* ==========================================
+   MENU DO TOPO
+   Organiza o menu, a logo e os links.
+========================================== */
+
+.topo {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 8%;
+  border-bottom:1px solid var(--borda);
+  position:relative;
+  background:var(--creme);
+  z-index:100;
+}
+
+.logo {
+  color:var(--laranja);
+  font-size:24px;
+  font-weight:bold;
+}
+
+.topo nav a {
+  margin:0 12px;
+  font-size:14px;
+}
+
+.topo > div a {
+  margin-left:14px;
+  font-size:14px;
+}
+
+/* Elementos exclusivos do menu de celular ficam escondidos no computador */
+.menu-mobile-btn,
+.menu-fechar,
+.menu-fundo,
+.menu-mobile-conta {
+  display:none;
+}
+
+
+/* ==========================================
+   BOTÕES, AVATARES E ETIQUETAS
+========================================== */
+
+.btn {
+  display:inline-block;
+  background:var(--laranja);
+  color:#fff;
+  border:0;
+  border-radius:8px;
+  padding:10px 18px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.btn-claro {
+  background:#fff;
+  color:var(--marrom);
+  border:1px solid var(--borda);
+}
+
+.btn-largo {
+  display:block;
+  text-align:center;
+  margin-top:12px;
+}
+
+.avatar {
+  display:inline-block;
+  width:36px;
+  height:36px;
+  line-height:36px;
+  text-align:center;
+  border-radius:50%;
+  background:#ffe3d6;
+  color:var(--laranja);
+}
+
+.grande {
+  width:48px;
+  height:48px;
+  line-height:48px;
+  border-radius:10px;
+  background:var(--borda);
+  color:var(--marrom);
+}
+
+.tag {
+  display:inline-block;
+  background:#ffe3d6;
+  color:var(--laranja);
+  border-radius:20px;
+  padding:3px 10px;
+  margin:2px;
+  font-size:12px;
+}
+
+.laranja {
+  color:var(--laranja);
+}
+
+
+/* ==========================================
+   LAYOUT
+   Organiza os conteúdos, linhas, colunas e cards.
+========================================== */
+
+.container {
+  max-width:900px;
+  margin:30px auto;
+  padding:0 20px;
+}
+
+.estreito {
+  max-width:480px;
+}
+
+.centro {
+  text-align:center;
+}
+
+.grade {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:16px;
+}
+
+.linha {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.cresce {
+  flex:1;
+}
+
+.card {
+  background:#fff;
+  border:1px solid var(--borda);
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.preco {
+  color:var(--laranja);
+  font-weight:bold;
+  font-size:18px;
+  text-align:right;
+}
+
+
+/* ==========================================
+   HOME
+   Define o banner, chamada para ação e rodapé.
+========================================== */
+
+.hero {
+  background:var(--marrom);
+  color:var(--creme);
+  padding:70px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:30px;
+}
+
+.hero h1 {
+  font-size:48px;
+  margin:12px 0;
+  max-width:420px;
+}
+
+.hero p {
+  max-width:420px;
+}
+
+.hero .card {
+  background:#5e3d3d;
+  border:0;
+  color:#fff;
+  min-width:200px;
+}
+
+.cta {
+  background:var(--marrom);
+  color:var(--creme);
+  border-radius:16px;
+  padding:40px;
+  margin:40px 0;
+}
+
+.rodape {
+  display:flex;
+  justify-content:space-between;
+  padding:20px 8%;
+  border-top:1px solid var(--borda);
+  font-size:13px;
+}
+
+
+/* ==========================================
+   FORMULÁRIOS
+   Define campos, etiquetas e etapas do cadastro.
+========================================== */
+
+label {
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin:14px 0 6px;
+}
+
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=number],
+input[type=time],
+textarea {
+  width:100%;
+  padding:10px;
+  background:var(--creme);
+  border:1px solid var(--borda);
+  border-radius:8px;
+  font-size:14px;
+}
+
+.chip {
+  display:inline-block;
+  background:var(--creme);
+  border:1px solid var(--borda);
+  border-radius:20px;
+  padding:6px 14px;
+  margin:3px;
+  font-size:13px;
+  cursor:pointer;
+  color:var(--marrom);
+}
+
+.chip.ativo {
+  background:var(--laranja);
+  color:#fff;
+  border-color:var(--laranja);
+}
+
+.barra {
+  display:flex;
+  gap:6px;
+  margin:10px 0 20px;
+}
+
+.barra span {
+  flex:1;
+  height:4px;
+  background:var(--borda);
+}
+
+.barra span.feita {
+  background:var(--laranja);
+}
+
+.etapa {
+  display:none;
+}
+
+
+/* ==========================================
+   ABAS E MENU
+   Controla a aparência e visibilidade das abas.
+========================================== */
+
+.abas {
+  display:flex;
+  gap:8px;
+  margin:20px 0;
+}
+
+.abas button {
+  background:#fff;
+  border:1px solid var(--borda);
+  border-radius:8px;
+  padding:8px 16px;
+  cursor:pointer;
+  color:var(--marrom);
+}
+
+.abas button.ativo {
+  background:var(--laranja);
+  color:#fff;
+  border-color:var(--laranja);
+}
+
+.aba {
+  display:none;
+}
+
+.aba.ativa {
+  display:block;
+}
+
+.cabecalho {
+  background:#fff;
+  border-bottom:1px solid var(--borda);
+}
+
+.menu-item {
+  display:block;
+  background:#fff;
+  border:1px solid var(--borda);
+  border-radius:10px;
+  padding:14px;
+  margin-bottom:8px;
+}
+
+
+/* ==========================================
+   LOGO
+   Ajusta o tamanho e a proporção da imagem.
+========================================== */
+
+.logo img {
+  width:130px;
+  height:45px;
+  object-fit:contain;
+}
+
+
+/* ==========================================
+   PAINEL DO ADMINISTRADOR
+   Define mensagens de sucesso e avisos.
+========================================== */
+
+.ok {
+  color:#2e7d32;
+  margin:6px 0;
+}
+
+.aviso {
+  color:#b26a00;
+  margin:6px 0;
+  font-weight:bold;
+}
+
+.abas button b {
+  margin-left:4px;
+}
+
+
+/* ==========================================
+   FOTO DO PROFESSOR
+   Ajusta tamanho e aparência das fotos.
+========================================== */
+
+.foto-prof {
+  width:48px;
+  height:48px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+
+/* ==========================================
+   RESPONSIVIDADE PARA TABLETS
+   Ajusta o site para telas de até 768px.
+========================================== */
+
+@media (max-width:768px) {
+
+  /* Organiza o menu superior */
+  .topo {
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 4%;
+  }
+
+  /* Ajusta o conteúdo */
+  .container {
+    width:100%;
+    padding:0 16px;
+  }
+
+  /* Ajusta o banner */
+  .hero {
+    padding:45px 5%;
+    gap:20px;
+  }
+
+  .hero h1 {
+    font-size:38px;
+  }
+
+  /* Ajusta os cards */
+  .grade {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+  }
+
+  .card {
+    padding:14px;
+  }
+
+  /* Permite quebra das linhas */
+  .linha {
+    flex-wrap:wrap;
+  }
+
+  .cresce {
+    min-width:0;
+  }
+
+  /* Ajusta as abas */
+  .abas {
+    flex-wrap:wrap;
+  }
+
+  /* Ajusta a chamada para ação */
+  .cta {
+    padding:30px;
+    margin:25px 0;
+  }
+
+  /* Ajusta o rodapé */
+  .rodape {
+    padding:20px 5%;
+    gap:15px;
+  }
+}
+
+
+/* ==========================================
+   RESPONSIVIDADE PARA CELULARES
+   Ajusta o site para telas de até 480px.
+========================================== */
+
+@media (max-width:480px) {
+
+  /* Cabeçalho do celular */
+  .topo {
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 16px;
+    gap:10px;
+  }
+
+  .logo img {
+    width:115px;
+    height:auto;
+  }
+
+  /* Botão de abrir o menu */
+  .menu-mobile-btn {
+    display:block;
+    background:transparent;
+    border:0;
+    color:var(--marrom);
+    font-size:30px;
+    line-height:1;
+    cursor:pointer;
+    padding:6px;
+  }
+
+  /* Esconde a conta que aparece no computador */
+  .menu-desktop-conta {
+    display:none !important;
+  }
+
+  /* Painel lateral */
+  .topo nav.menu-lateral {
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    justify-content:flex-start;
+    gap:8px;
+
+    position:fixed;
+    top:0;
+    right:0;
+    width:min(290px, 85vw);
+    height:100vh;
+    height:100dvh;
+
+    padding:70px 22px 24px;
+    background:var(--creme);
+    box-shadow:-4px 0 18px rgba(0,0,0,0.18);
+
+    z-index:202;
+    overflow-y:auto;
+
+    transform:translateX(110%);
+    transition:transform 0.3s ease;
+  }
+
+  /* Quando o JavaScript abre o menu */
+  .topo nav.menu-lateral.aberto {
+    transform:translateX(0);
+  }
+
+  /* Links dentro do painel */
+  .topo nav.menu-lateral > a {
+    display:block;
+    margin:0;
+    padding:13px 8px;
+    border-bottom:1px solid var(--borda);
+    font-size:15px;
+  }
+
+  /* Botão de fechar */
+  .menu-fechar {
+    display:block;
+    position:absolute;
+    top:14px;
+    right:18px;
+    background:transparent;
+    border:0;
+    color:var(--marrom);
+    font-size:32px;
+    cursor:pointer;
+  }
+
+  /* Fundo escuro atrás do painel */
+  .menu-fundo {
+    display:block;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    z-index:201;
+
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .menu-fundo.aberto {
+    opacity:1;
+    visibility:visible;
+  }
+
+  /* Links de conta dentro do menu lateral */
+  .menu-mobile-conta {
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:14px;
+  }
+
+  .menu-mobile-conta a {
+    display:block;
+    margin:0;
+    padding:10px 8px;
+  }
+
+  .menu-mobile-conta .btn {
+    text-align:center;
+  }
+
+  /* Impede a página de rolar com o menu aberto */
+  body.menu-aberto {
+    overflow:hidden;
+  }
+
+  /* Conteúdo */
+  .container {
+    width:100%;
+    padding:0 14px;
+    margin:18px auto;
+  }
+
+  .estreito {
+    max-width:100%;
+  }
+
+  /* Títulos */
+  h1 {
+    font-size:28px;
+  }
+
+  h2 {
+    font-size:23px;
+  }
+
+  h3 {
+    font-size:19px;
+  }
+
+  /* Banner inicial */
+  .hero {
+    flex-direction:column;
+    align-items:flex-start;
+    padding:35px 20px;
+    gap:18px;
+  }
+
+  .hero h1 {
+    font-size:30px;
+  }
+
+  .hero p {
+    font-size:14px;
+  }
+
+  .hero .card {
+    width:100%;
+    min-width:0;
+  }
+
+  /* Cards em uma coluna */
+  .grade {
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .card {
+    width:100%;
+    padding:13px;
+  }
+
+  /* Linhas */
+  .linha {
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  .cresce {
+    width:100%;
+  }
+
+  /* Botões */
+  .btn {
+    max-width:100%;
+    padding:10px 14px;
+  }
+
+  .btn-largo {
+    width:100%;
+  }
+
+  /* Abas com rolagem lateral */
+  .abas {
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    white-space:nowrap;
+    padding-bottom:8px;
+  }
+
+  .abas button {
+    flex-shrink:0;
+    font-size:13px;
+  }
+
+  /* Formulários */
+  input,
+  textarea,
+  select {
+    max-width:100%;
+    font-size:16px;
+  }
+
+  input[type=text],
+  input[type=email],
+  input[type=password],
+  input[type=number],
+  input[type=time],
+  textarea {
+    width:100%;
+  }
+
+  /* Etapas do cadastro */
+  .barra {
+    gap:4px;
+  }
+
+  /* Etiquetas */
+  .chip,
+  .tag {
+    max-width:100%;
+  }
+
+  /* Preços */
+  .preco {
+    text-align:left;
+    font-size:16px;
+  }
+
+  /* Chamada para ação */
+  .cta {
+    padding:22px 16px;
+    margin:20px 0;
+  }
+
+  /* Rodapé */
+  .rodape {
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:20px 14px;
+    gap:12px;
+  }
+
+  /* Foto dos professores */
+  .foto-prof {
+    width:42px;
+    height:42px;
+  }
+
+  /* Cabeçalho do administrador */
+  .cabecalho .container {
+    padding:14px;
+  }
+}
+
+
+/* ==========================================
+   CELULARES PEQUENOS
+   Ajustes extras para telas de até 360px.
+========================================== */
+
+@media (max-width:360px) {
+
+  .hero h1 {
+    font-size:26px;
+  }
+
+  .abas button {
+    padding:7px 10px;
+    font-size:12px;
+  }
+
+  .card {
+    padding:10px;
+  }
+
+  .cta {
+    padding:18px 12px;
+  }
+
+  .btn {
+    font-size:13px;
+    padding:9px 12px;
+  }
+}
+
+
+/* ==========================================
+   AJUSTES ESPECÍFICOS DA TELA INICIAL
+   Organiza o banner, estatísticas e link.
+========================================== */
+
+/* Divide o banner entre texto e estatísticas */
+.hero > div:first-child {
+  flex:1 1 320px;
+  min-width:0;
+}
+
+/* Organiza os três cards de estatísticas */
+.hero > div:last-child {
+  flex:1 1 200px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+
+/* Evita espaços extras entre os cards de estatísticas */
+.hero > div:last-child .card {
+  width:100%;
+  min-width:0;
+  margin-bottom:0;
+}
+
+/* Posiciona o link Ver todos à direita */
+.link-todos {
+  float:right;
+}
+
+/* Ajusta os elementos da tela inicial em celulares */
+@media (max-width:480px) {
+
+  /* Faz a área das estatísticas ocupar toda a largura */
+  .hero > div:last-child {
+    width:100%;
+  }
+
+  /* Deixa o link Ver todos abaixo do texto */
+  .link-todos {
+    float:none;
+    display:inline-block;
+    margin-top:8px;
+  }
+}

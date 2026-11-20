@@ -400,3 +400,164 @@ UNION ALL SELECT 'disputa', COUNT(*) FROM disputa
 UNION ALL SELECT 'conversa', COUNT(*) FROM conversa
 UNION ALL SELECT 'participante_conversa', COUNT(*) FROM participante_conversa
 UNION ALL SELECT 'mensagem', COUNT(*) FROM mensagem;
+
+USE mentora;
+
+SELECT id_disciplina, nome, HEX(nome)
+FROM disciplina;
+
+USE mentora;
+SELECT id_usuario, nome, email, tipo
+FROM usuario;
+
+UPDATE usuario
+SET tipo = 'admin'
+WHERE email = 'eloav@gmail.com';
+
+SELECT nome, email, tipo
+FROM usuario
+WHERE tipo = 'admin';
+
+SHOW VARIABLES LIKE 'character_set%';
+
+USE mentora;
+SHOW TABLE STATUS;
+
+USE mentora;
+
+SELECT nome
+FROM usuario;
+
+USE mentora;
+
+SELECT descricao
+FROM perfil_professor;
+
+DESCRIBE perfil_professor;
+
+SELECT
+    p.id_professor,
+    u.nome,
+    p.descricao
+FROM perfil_professor p
+JOIN usuario u ON p.id_usuario = u.id_usuario;
+
+USE mentora;
+
+UPDATE perfil_professor
+SET descricao = 'Professor de exatas com didática prática.'
+WHERE id_professor = 1;
+
+UPDATE perfil_professor
+SET descricao = 'Professora de idiomas e redação.'
+WHERE id_professor = 2;
+
+UPDATE perfil_professor
+SET descricao = 'Engenheiro e professor de programação e física.'
+WHERE id_professor = 3;
+
+USE mentora;
+
+SELECT
+    u.nome,
+    p.descricao
+FROM perfil_professor p
+JOIN usuario u ON p.id_usuario = u.id_usuario;
+
+USE mentora;
+
+SELECT * FROM disciplina;
+
+USE mentora;
+
+UPDATE disciplina SET
+    nome = 'Matemática',
+    descricao = 'Álgebra, geometria, funções e preparação para vestibular'
+WHERE id_disciplina = 1;
+
+UPDATE disciplina SET
+    descricao = 'Conversação, gramática e preparação para exames'
+WHERE id_disciplina = 2;
+
+UPDATE disciplina SET
+    descricao = 'Lógica de programação, Python e desenvolvimento web'
+WHERE id_disciplina = 3;
+
+UPDATE disciplina SET
+    descricao = 'Mecânica, termologia, eletricidade e ondas'
+WHERE id_disciplina = 4;
+
+UPDATE disciplina SET
+    descricao = 'Estrutura dissertativa e preparação para o ENEM'
+WHERE id_disciplina = 5;
+
+UPDATE disciplina SET
+    descricao = 'Gramática, interpretação de texto e literatura'
+WHERE id_disciplina = 6;
+
+UPDATE disciplina SET
+    descricao = 'Química geral, orgânica e físico-química'
+WHERE id_disciplina = 7;
+
+UPDATE disciplina SET
+    descricao = 'Citologia, genética, ecologia e fisiologia'
+WHERE id_disciplina = 8;
+
+UPDATE disciplina SET
+    nome = 'História',
+    descricao = 'História do Brasil e geral, com foco em vestibular'
+WHERE id_disciplina = 9;
+
+USE mentora;
+
+USE mentora;
+
+SELECT
+    u.nome,
+    p.experiencia
+FROM perfil_professor p
+JOIN usuario u ON p.id_usuario = u.id_usuario;
+
+SELECT * FROM disciplina;
+
+USE mentora;
+
+UPDATE perfil_professor
+SET experiencia = '6 anos ensinando inglês e redação.'
+WHERE id_professor = 2;
+
+SELECT experiencia
+FROM perfil_professor
+WHERE id_professor = 2;
+
+USE mentora;
+
+SELECT
+    id_professor,
+    descricao,
+    formacao,
+    experiencia
+FROM perfil_professor;
+
+USE mentora;
+
+SELECT
+    id_professor,
+    nome,
+    experiencia
+FROM perfil_professor
+JOIN usuario USING (id_usuario);
+
+USE mentora;
+
+-- Corrigir formação do Daniel
+UPDATE perfil_professor
+SET formacao = 'Licenciatura em Matemática - PUC-Campinas',
+    experiencia = '8 anos de reforço escolar e pré-vestibular.'
+WHERE id_professor = 1;
+
+-- Corrigir formação e experiência do Felipe
+UPDATE perfil_professor
+SET formacao = 'Engenharia de Computação - USP',
+    experiencia = '10 anos de experiência em tecnologia e ensino.'
+WHERE id_professor = 3;

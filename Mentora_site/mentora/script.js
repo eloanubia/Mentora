@@ -7,20 +7,83 @@ function esc(texto) {
   return String(texto == null ? "" : texto).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 }
 
-// ---------- Menu do topo (escrito uma vez e usado em todas as páginas) ----------
+// ---------- Menu do topo (usado em todas as páginas) ----------
 function montarMenu() {
   const logado = !!token();
   const inicial = (usuario().nome || "?")[0];
+
   const direita = logado
     ? `<a href="buscar.html"><span class="avatar">${esc(inicial)}</span> Meu perfil</a>`
     : `<a href="entrar.html">Entrar</a><a href="cadastro.html" class="btn">Cadastre-se</a>`;
+
   document.getElementById("menu").innerHTML = `
     <header class="topo">
-      <a href="index.html" class="logo"><img src="Imagens/logo.png" alt="Logo Mentora"></a>
-      <nav><a href="index.html">Home</a><a href="buscar.html">Buscar professor</a><a href="index.html#como">Como funciona</a></nav>
-      <div>${direita}</div>
+      <a href="index.html" class="logo">
+        <img src="Imagens/logo.png" alt="Logo Mentora">
+      </a>
+
+      <!-- Botão que abre o menu no celular -->
+      <button class="menu-mobile-btn" type="button"
+        aria-label="Abrir menu" aria-expanded="false"
+        aria-controls="menu-lateral" onclick="alternarMenuMobile()">
+        ☰
+      </button>
+
+      <!-- Fundo escuro atrás do menu -->
+      <div class="menu-fundo" onclick="fecharMenuMobile()"></div>
+
+      <!-- Navegação principal -->
+      <nav id="menu-lateral" class="menu-lateral">
+        <button class="menu-fechar" type="button"
+          aria-label="Fechar menu" onclick="fecharMenuMobile()">
+          ×
+        </button>
+
+        <a href="index.html" onclick="fecharMenuMobile()">Home</a>
+        <a href="buscar.html" onclick="fecharMenuMobile()">Buscar professor</a>
+        <a href="index.html#como" onclick="fecharMenuMobile()">Como funciona</a>
+
+        <!-- Links da conta no celular -->
+        <div class="menu-mobile-conta">${direita}</div>
+      </nav>
+
+      <!-- Links da conta no computador -->
+      <div class="menu-desktop-conta">${direita}</div>
     </header>`;
 }
+
+// Abre ou fecha o menu lateral
+function alternarMenuMobile() {
+  const menu = document.getElementById("menu-lateral");
+  const fundo = document.querySelector(".menu-fundo");
+  const botao = document.querySelector(".menu-mobile-btn");
+
+  if (!menu || !fundo || !botao) return;
+
+  const aberto = menu.classList.toggle("aberto");
+  fundo.classList.toggle("aberto", aberto);
+  document.body.classList.toggle("menu-aberto", aberto);
+  botao.setAttribute("aria-expanded", aberto);
+}
+
+// Fecha o menu lateral
+function fecharMenuMobile() {
+  const menu = document.getElementById("menu-lateral");
+  const fundo = document.querySelector(".menu-fundo");
+  const botao = document.querySelector(".menu-mobile-btn");
+
+  if (!menu || !fundo || !botao) return;
+
+  menu.classList.remove("aberto");
+  fundo.classList.remove("aberto");
+  document.body.classList.remove("menu-aberto");
+  botao.setAttribute("aria-expanded", "false");
+}
+
+// Fecha o menu ao apertar ESC
+document.addEventListener("keydown", function(evento) {
+  if (evento.key === "Escape") fecharMenuMobile();
+});
 
 // ---------- Conta: entrar e criar conta ----------
 async function entrar(evento) {
@@ -247,14 +310,20 @@ let horarioEscolhido = null;
 let disciplinaEscolhida = null;
 let professorAtual = null;
 
+
 async function mostrarPerfilDoProfessor() {
   const id = Number(new URLSearchParams(window.location.search).get("id"));
   const div = document.getElementById("conteudo");
   let p;
+
   try {
     p = await api("/api/professores/" + id, { semToken: true });
     horariosLista = await api("/api/professores/" + id + "/horarios?dias=14", { semToken: true });
-  } catch (e) { div.innerHTML = "<p>Professor não encontrado.</p>"; return; }
+  } catch (e) {
+    div.innerHTML = "<p>Professor não encontrado.</p>";
+    return;
+  }
+
   professorAtual = p;
   disciplinaEscolhida = p.disciplinas.length === 1 ? p.disciplinas[0].id : null;
 
@@ -262,23 +331,80 @@ async function mostrarPerfilDoProfessor() {
     <div class="card">
       <div class="linha">
         ${fotoOuInicial(p)}
-        <div class="cresce"><h2 style="margin:0">${esc(p.nome)}</h2><small class="laranja">${esc(p.formacao || "")}</small><br><small>⭐ ${notaTexto(p)} (${p.avaliacoes} avaliações)</small></div>
+        <div class="cresce">
+          <h2 style="margin:0">${esc(p.nome)}</h2>
+          <small class="laranja">${esc(p.formacao || "")}</small>
+          <br>
+          <small>⭐ ${notaTexto(p)} (${p.avaliacoes} avaliações)</small>
+        </div>
       </div>
+
       <h3>Sobre</h3>
       <p><small>${esc(p.descricao || "")}</small></p>
+
       ${p.experiencia ? `<p><small><b>Experiência:</b> ${esc(p.experiencia)}</small></p>` : ""}
     </div>
+
     <div class="card">
       <h3>Disciplinas e valores</h3>
-      ${p.disciplinas.map(d => `<button class="chip ${p.disciplinas.length === 1 ? "ativo" : ""}" data-disc="${d.id}" onclick="escolherDisciplina(this, ${d.id})">${esc(d.nome)} · R$ ${d.preco}/h</button>`).join("")}
+
+      ${p.disciplinas.map(d => `
+        <button class="chip ${p.disciplinas.length === 1 ? "ativo" : ""}"
+          data-disc="${d.id}"
+          onclick="escolherDisciplina(this, ${d.id})">
+          ${esc(d.nome)} · R$ ${d.preco}/h
+        </button>
+      `).join("")}
     </div>
+
     <div class="card">
       <h3>Horários disponíveis</h3>
-      ${horariosLista.length === 0 ? "<small>Nenhum horário livre nos próximos dias.</small>" :
-        horariosLista.map((h, i) => `<button class="chip" data-hora="${i}" onclick="escolherHorario(this, ${i})">${esc(h.rotulo)}</button>`).join("")}
-      <button class="btn btn-largo" style="width:100%" onclick="solicitarAula()">Solicitar aula</button>
+
+      ${horariosLista.length === 0
+        ? "<small>Nenhum horário livre nos próximos dias.</small>"
+        : horariosLista.map((h, i) => `
+          <button class="chip" data-hora="${i}"
+            onclick="escolherHorario(this, ${i})">
+            ${esc(h.rotulo)}
+          </button>
+        `).join("")}
+
+      <button class="btn btn-largo" style="width:100%; margin-top:12px"
+        onclick="iniciarConversa(${p.id})">
+        Conversar
+      </button>
+
+      <button class="btn btn-largo" style="width:100%; margin-top:8px"
+        onclick="solicitarAula()">
+        Solicitar aula
+      </button>
     </div>`;
 }
+
+
+// Inicia uma conversa com o professor.
+async function iniciarConversa(idProfessor) {
+  if (!token()) {
+    alert("Faça login para conversar com o professor.");
+    window.location.href = "entrar.html";
+    return;
+  }
+
+  try {
+    const resultado = await api("/api/conversas", {
+      metodo: "POST",
+      corpo: {
+        id_professor: idProfessor
+      }
+    });
+
+    window.location.href = "./chat.html?id=" + resultado.id_conversa;
+
+  } catch (erro) {
+    alert("Não foi possível iniciar a conversa. Tente novamente.");
+  }
+}
+
 
 function escolherDisciplina(botao, id) {
   disciplinaEscolhida = id;
@@ -292,18 +418,56 @@ function escolherHorario(botao, indice) {
   botao.classList.add("ativo");
 }
 
-async function solicitarAula() {
-  if (!exigirLogin()) return;
-  if (!disciplinaEscolhida) { alert("Escolha a disciplina."); return; }
-  if (!horarioEscolhido) { alert("Escolha um horário primeiro."); return; }
-  try {
-    const r = await api("/api/solicitacoes", { metodo: "POST", corpo: {
-      id_professor: professorAtual.id, id_disciplina: disciplinaEscolhida, data_hora: horarioEscolhido.data_hora } });
-    alert(r.mensagem);
-    window.location.href = "buscar.html";
-  } catch (e) { mostrarErro(e); }
-}
 
+async function solicitarAula() {
+    // Verifica se o aluno está conectado
+    if (!exigirLogin()) return;
+
+    // Verifica se uma disciplina foi escolhida
+    if (!disciplinaEscolhida) {
+        alert("Escolha a disciplina.");
+        return;
+    }
+
+    // Verifica se um horário foi escolhido
+    if (!horarioEscolhido) {
+        alert("Escolha um horário primeiro.");
+        return;
+    }
+
+    try {
+        // Envia a solicitação de aula para a API
+        const r = await api("/api/solicitacoes", {
+            metodo: "POST",
+            corpo: {
+                id_professor: professorAtual.id,
+                id_disciplina: disciplinaEscolhida,
+                data_hora: horarioEscolhido.data_hora
+            }
+        });
+
+        // Guarda os dados da solicitação para usar na página de pagamento
+        const dadosPagamento = {
+            idSolicitacao: r.solicitacao.id,
+            nomeProfessor: professorAtual.nome,
+            disciplina: r.solicitacao.disciplina,
+            dataHorario: r.solicitacao.rotulo,
+            valor: r.solicitacao.valor
+        };
+
+        // Salva os dados temporariamente no navegador
+        localStorage.setItem(
+            "mentoraPagamento",
+            JSON.stringify(dadosPagamento)
+        );
+
+        // Abre a página de pagamento simulado
+        window.location.href = "pagamento.html";
+
+    } catch (e) {
+        mostrarErro(e);
+    }
+}
 // =====================================================================
 // ÁREA DO PROFESSOR (professor.html)
 // =====================================================================
