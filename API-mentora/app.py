@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, redirect
 from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 
@@ -63,6 +63,10 @@ class Api:
             self.app.register_blueprint(modulo.bp)
 
         self.app.add_url_rule("/api/status", view_func=self.status)
+        self.app.add_url_rule("/", view_func=self.inicio)
+
+    def inicio(self):
+        return redirect("/api/status")
 
     def _registrar_erros(self):
         @self.app.errorhandler(ErroApi)
